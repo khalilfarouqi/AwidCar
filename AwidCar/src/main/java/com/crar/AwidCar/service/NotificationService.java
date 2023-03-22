@@ -1,7 +1,7 @@
-package com.crar.AwidCar.service.implementation;
+package com.crar.AwidCar.service;
 
-import com.crar.AwidCar.mapper.CarMapper;
-import com.crar.AwidCar.repository.CarRepository;
+import com.crar.AwidCar.mapper.NotificationMapper;
+import com.crar.AwidCar.repository.NotificationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
@@ -12,6 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
-public class CarService {
-    private final CarRepository carRepository;
+public class NotificationService {
+    private final NotificationRepository notificationRepository;
 }

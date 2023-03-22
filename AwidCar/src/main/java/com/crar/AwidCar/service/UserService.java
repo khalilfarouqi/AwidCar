@@ -1,4 +1,4 @@
-package com.crar.AwidCar.service.implementation;
+package com.crar.AwidCar.service;
 
 import com.crar.AwidCar.mapper.*;
 import com.crar.AwidCar.repository.*;
@@ -12,6 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
-public class PhotoService {
-    private final PhotoRepository photoRepository;
+public class UserService {
+    private final UserRepository userRepository;
 }

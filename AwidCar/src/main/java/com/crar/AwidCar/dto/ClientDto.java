@@ -4,12 +4,13 @@ import com.crar.AwidCar.entity.enums.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.*;
 
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ClientDto {
+public class ClientDto implements Serializable {
     private String firstName;
     private String lastName;
     private Gender gender;

@@ -1,7 +1,7 @@
-package com.crar.AwidCar.service;
+package com.crar.AwidCar.service.implementation;
 
-import com.crar.AwidCar.mapper.*;
-import com.crar.AwidCar.repository.*;
+import com.crar.AwidCar.mapper.CarMapper;
+import com.crar.AwidCar.repository.CarRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.mapstruct.factory.Mappers;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
-public class UserService {
-    private final UserRepository userRepository;
-    private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
+public class CarService {
+    private final CarRepository carRepository;
+    private final CarMapper mapper = Mappers.getMapper(CarMapper.class);
 }

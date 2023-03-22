@@ -1,4 +1,4 @@
-package com.crar.AwidCar.service;
+package com.crar.AwidCar.service.implementation;
 
 import com.crar.AwidCar.mapper.NotificationGroupMapper;
 import com.crar.AwidCar.repository.NotificationGroupRepository;

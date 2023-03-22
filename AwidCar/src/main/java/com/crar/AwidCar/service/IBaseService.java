@@ -2,12 +2,12 @@ package com.crar.AwidCar.service;
 
 import java.io.Serializable;
 
-public interface IBaseService<E, D extends Serializable> extends IRsqlService<E, D> {
-    D save(D dto);
+public interface IBaseService<E> extends IRsqlService<E> {
+    E save(E dto);
 
-    D update(D dto);
+    E update(E dto);
 
     void delete(Long id);
 
-    D findById(Long id);
+    E findById(Long id);
 }

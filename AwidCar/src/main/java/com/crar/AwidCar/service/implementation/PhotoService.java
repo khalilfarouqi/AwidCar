@@ -14,5 +14,4 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class PhotoService {
     private final PhotoRepository photoRepository;
-    private final PhotoMapper photoMapper = Mappers.getMapper(PhotoMapper.class);
 }

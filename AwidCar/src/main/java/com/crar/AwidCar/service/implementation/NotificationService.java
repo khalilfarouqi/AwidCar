@@ -14,5 +14,4 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class NotificationService {
     private final NotificationRepository notificationRepository;
-    private final NotificationMapper mapper = Mappers.getMapper(NotificationMapper.class);
 }

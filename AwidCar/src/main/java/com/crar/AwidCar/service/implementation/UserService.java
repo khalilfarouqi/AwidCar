@@ -14,5 +14,4 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserService {
     private final UserRepository userRepository;
-    private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
 }

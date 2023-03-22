@@ -14,5 +14,4 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class NotificationGroupService {
     private final NotificationGroupRepository notificationGroupRepository;
-    private final NotificationGroupMapper notificationGroupMapper = Mappers.getMapper(NotificationGroupMapper.class);
 }

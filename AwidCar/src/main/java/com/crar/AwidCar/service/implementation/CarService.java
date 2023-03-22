@@ -14,5 +14,4 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CarService {
     private final CarRepository carRepository;
-    private final CarMapper mapper = Mappers.getMapper(CarMapper.class);
 }

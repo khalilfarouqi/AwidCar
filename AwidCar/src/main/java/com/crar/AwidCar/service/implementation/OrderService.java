@@ -14,5 +14,4 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class OrderService {
     private final OrderRepository orderRepository;
-    private final OrderMapper orderMapper = Mappers.getMapper(OrderMapper.class);
 }

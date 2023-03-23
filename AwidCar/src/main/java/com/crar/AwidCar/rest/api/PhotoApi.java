@@ -1,5 +1,6 @@
 package com.crar.AwidCar.rest.api;
 
+import com.crar.AwidCar.dto.PhotoDto;
 import com.crar.AwidCar.entity.Photo;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
@@ -12,17 +13,17 @@ import java.util.List;
 @RequestMapping("/v1/photo")
 public interface PhotoApi {
     @PostMapping
-    Photo save(@RequestBody Photo photo);
+    PhotoDto save(@RequestBody PhotoDto photo);
     @PutMapping
-    Photo update(@RequestBody Photo photo);
+    PhotoDto update(@RequestBody PhotoDto photo);
     @DeleteMapping(value = "/{id}")
     void delete(@PathVariable Long id);
     @GetMapping(value = "/{id}")
-    Photo getPhotoById(@PathVariable("id") Long id);
+    PhotoDto getPhotoById(@PathVariable("id") Long id);
     @GetMapping(value = "/getAll")
-    List<Photo> getAllPhoto();
+    List<PhotoDto> getAllPhoto();
     @GetMapping(value = "/search")
-    Page<Photo> search(@RequestParam(defaultValue = "id>0") String query,
+    Page<PhotoDto> search(@RequestParam(defaultValue = "id>0") String query,
                        @RequestParam(defaultValue = "0") Integer page,
                        @RequestParam(defaultValue = "10") Integer size,
                        @RequestParam(defaultValue = "asc") String order,

@@ -1,6 +1,6 @@
 package com.crar.AwidCar.rest.controller;
 
-import com.crar.AwidCar.entity.Order;
+import com.crar.AwidCar.dto.OrderDto;
 import com.crar.AwidCar.rest.api.OrderApi;
 import com.crar.AwidCar.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -16,12 +16,12 @@ import java.util.List;
 public class OrderController implements OrderApi {
     private final OrderService orderService;
     @Override
-    public Order save(Order order) {
+    public OrderDto save(OrderDto order) {
         return orderService.save(order);
     }
 
     @Override
-    public Order update(Order order) {
+    public OrderDto update(OrderDto order) {
         return orderService.update(order);
     }
 
@@ -31,17 +31,17 @@ public class OrderController implements OrderApi {
     }
 
     @Override
-    public Order getOrderById(Long id) {
+    public OrderDto getOrderById(Long id) {
         return orderService.findById(id);
     }
 
     @Override
-    public List<Order> getAllOrder() {
+    public List<OrderDto> getAllOrder() {
         return orderService.findAll();
     }
 
     @Override
-    public Page<Order> search(String query, Integer page, Integer size, String order, String sort) {
+    public Page<OrderDto> search(String query, Integer page, Integer size, String order, String sort) {
         return orderService.rsqlQuery(query, page, size, order, sort);
     }
 }

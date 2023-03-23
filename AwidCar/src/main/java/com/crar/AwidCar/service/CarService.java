@@ -13,6 +13,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Slf4j
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -21,14 +23,16 @@ public class CarService implements IBaseService<Car> {
     private final CarRepository carRepository;
 
     @Override
+    @Transactional
     public Car save(Car car) {
         return carRepository.save(car);
     }
 
     @Override
+    @Transactional
     public Car update(Car car) {
         if (findById(car.getId()).equals(null))
-            throw new ResourceNotFoundException("photo not fond");
+            throw new ResourceNotFoundException("car not fond");
         return carRepository.save(car);
     }
 
@@ -39,7 +43,12 @@ public class CarService implements IBaseService<Car> {
 
     @Override
     public Car findById(Long id) {
-        return carRepository.getById(id);
+        return carRepository.findById(id).get();
+    }
+
+    @Override
+    public List<Car> findAll() {
+        return carRepository.findAll();
     }
 
     @Override

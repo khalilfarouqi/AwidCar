@@ -13,6 +13,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Slf4j
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -21,14 +23,16 @@ public class UserService implements IBaseService<User> {
     private final UserRepository userRepository;
 
     @Override
+    @Transactional
     public User save(User user) {
         return userRepository.save(user);
     }
 
     @Override
+    @Transactional
     public User update(User user) {
         if (findById(user.getId()).equals(null))
-            throw new ResourceNotFoundException("photo not fond");
+            throw new ResourceNotFoundException("user not fond");
         return userRepository.save(user);
     }
 
@@ -39,7 +43,12 @@ public class UserService implements IBaseService<User> {
 
     @Override
     public User findById(Long id) {
-        return userRepository.getById(id);
+        return userRepository.findById(id).get();
+    }
+
+    @Override
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
     @Override

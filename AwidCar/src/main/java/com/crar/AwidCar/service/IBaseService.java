@@ -1,6 +1,7 @@
 package com.crar.AwidCar.service;
 
 import java.io.Serializable;
+import java.util.List;
 
 public interface IBaseService<E> extends IRsqlService<E> {
     E save(E dto);
@@ -10,4 +11,6 @@ public interface IBaseService<E> extends IRsqlService<E> {
     void delete(Long id);
 
     E findById(Long id);
+
+    List<E> findAll();
 }

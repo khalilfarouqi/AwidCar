@@ -10,8 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Slf4j
 @Transactional(readOnly = true)
@@ -19,11 +22,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class PhotoService implements IBaseService<Photo> {
     private final PhotoRepository photoRepository;
+    @Transactional
     public Photo save(Photo photo){
         return photoRepository.save(photo);
     }
 
     @Override
+    @Transactional
     public Photo update(Photo photo) {
         if (findById(photo.getId()).equals(null))
             throw new ResourceNotFoundException("photo not fond");
@@ -37,7 +42,12 @@ public class PhotoService implements IBaseService<Photo> {
 
     @Override
     public Photo findById(Long id) {
-        return photoRepository.getById(id);
+        return photoRepository.findById(id).get();
+    }
+
+    @Override
+    public List<Photo> findAll() {
+        return photoRepository.findAll();
     }
 
     @Override
@@ -48,6 +58,8 @@ public class PhotoService implements IBaseService<Photo> {
         if (size > 20) {
             size = 20;
         }
-        return photoRepository.findAll(RSQLJPASupport.toSpecification(query), PageRequest.of(page, size, Sort.Direction.fromString(order), sort));
+        Specification a = RSQLJPASupport.toSpecification(query);
+        var b = PageRequest.of(page, size, Sort.Direction.fromString(order), sort);
+        return photoRepository.findAll(a, b);
     }
 }

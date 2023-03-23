@@ -13,6 +13,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Slf4j
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -21,14 +23,16 @@ public class NotificationGroupService implements IBaseService<NotificationGroup>
     private final NotificationGroupRepository notificationGroupRepository;
 
     @Override
+    @Transactional
     public NotificationGroup save(NotificationGroup notificationGroup) {
         return notificationGroupRepository.save(notificationGroup);
     }
 
     @Override
+    @Transactional
     public NotificationGroup update(NotificationGroup notificationGroup) {
         if (findById(notificationGroup.getId()).equals(null))
-            throw new ResourceNotFoundException("photo not fond");
+            throw new ResourceNotFoundException("Notification Group not fond");
         return notificationGroupRepository.save(notificationGroup);
     }
 
@@ -39,7 +43,12 @@ public class NotificationGroupService implements IBaseService<NotificationGroup>
 
     @Override
     public NotificationGroup findById(Long id) {
-        return notificationGroupRepository.getById(id);
+        return notificationGroupRepository.findById(id).get();
+    }
+
+    @Override
+    public List<NotificationGroup> findAll() {
+        return notificationGroupRepository.findAll();
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.crar.AwidCar.rest.controller;
 
-import com.crar.AwidCar.entity.NotificationGroup;
+import com.crar.AwidCar.dto.NotificationGroupDto;
 import com.crar.AwidCar.rest.api.NotificationGroupApi;
 import com.crar.AwidCar.service.NotificationGroupService;
 import lombok.RequiredArgsConstructor;
@@ -16,12 +16,12 @@ import java.util.List;
 public class NotificationGroupController implements NotificationGroupApi {
     private final NotificationGroupService notificationGroupService;
     @Override
-    public NotificationGroup save(NotificationGroup notificationGroup) {
+    public NotificationGroupDto save(NotificationGroupDto notificationGroup) {
         return notificationGroupService.save(notificationGroup);
     }
 
     @Override
-    public NotificationGroup update(NotificationGroup notificationGroup) {
+    public NotificationGroupDto update(NotificationGroupDto notificationGroup) {
         return notificationGroupService.update(notificationGroup);
     }
 
@@ -31,17 +31,17 @@ public class NotificationGroupController implements NotificationGroupApi {
     }
 
     @Override
-    public NotificationGroup getNotificationGroupById(Long id) {
+    public NotificationGroupDto getNotificationGroupById(Long id) {
         return notificationGroupService.findById(id);
     }
 
     @Override
-    public List<NotificationGroup> getAllNotificationGroup() {
+    public List<NotificationGroupDto> getAllNotificationGroup() {
         return notificationGroupService.findAll();
     }
 
     @Override
-    public Page<NotificationGroup> search(String query, Integer page, Integer size, String order, String sort) {
+    public Page<NotificationGroupDto> search(String query, Integer page, Integer size, String order, String sort) {
         return notificationGroupService.rsqlQuery(query, page, size, order, sort);
     }
 }

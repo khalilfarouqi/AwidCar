@@ -10,7 +10,7 @@ import java.util.*;
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ClientDto implements Serializable {
+public class ClientDto extends UserDto implements Serializable {
     private String firstName;
     private String lastName;
     private Gender gender;

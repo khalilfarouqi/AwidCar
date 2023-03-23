@@ -3,10 +3,12 @@ package com.crar.AwidCar.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class NotificationDto {
+public class NotificationDto implements Serializable {
     private Long id;
     private String object;
     private String body;

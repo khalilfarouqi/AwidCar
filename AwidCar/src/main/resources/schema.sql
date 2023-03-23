@@ -31,7 +31,6 @@ create table if not exists cars (
     photo_id         bigint references photos(id)
     );
 create table if not exists users (
-    dtype         varchar(31) not null,
     id            bigserial primary key,
     last_check_in timestamp(6),
     pass_word     varchar(255),

@@ -36,6 +36,7 @@ public class OrderService implements IBaseService<Order> {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         orderRepository.deleteById(id);
     }

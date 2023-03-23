@@ -37,6 +37,7 @@ public class ClientService implements IBaseService<Client> {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         clientRepository.deleteById(id);
     }

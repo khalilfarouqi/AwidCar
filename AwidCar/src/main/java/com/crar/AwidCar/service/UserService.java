@@ -37,6 +37,7 @@ public class UserService implements IBaseService<User> {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         userRepository.deleteById(id);
     }

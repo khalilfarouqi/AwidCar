@@ -37,6 +37,7 @@ public class NotificationService implements IBaseService<Notification> {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         notificationRepository.deleteById(id);
     }

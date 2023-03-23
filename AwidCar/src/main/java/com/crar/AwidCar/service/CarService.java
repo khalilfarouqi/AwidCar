@@ -37,6 +37,7 @@ public class CarService implements IBaseService<Car> {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         carRepository.deleteById(id);
     }

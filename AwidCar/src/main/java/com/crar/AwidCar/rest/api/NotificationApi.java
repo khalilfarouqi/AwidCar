@@ -1,5 +1,6 @@
 package com.crar.AwidCar.rest.api;
 
+import com.crar.AwidCar.dto.NotificationDto;
 import com.crar.AwidCar.entity.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
@@ -12,17 +13,17 @@ import java.util.List;
 @RequestMapping("/v1/notification")
 public interface NotificationApi {
     @PostMapping
-    Notification save(@RequestBody Notification notification);
+    NotificationDto save(@RequestBody NotificationDto notification);
     @PutMapping
-    Notification update(@RequestBody Notification notification);
+    NotificationDto update(@RequestBody NotificationDto notification);
     @DeleteMapping(value = "/{id}")
     void delete(@PathVariable Long id);
     @GetMapping(value = "/{id}")
-    Notification getNotificationById(@PathVariable("id") Long id);
+    NotificationDto getNotificationById(@PathVariable("id") Long id);
     @GetMapping(value = "/getAll")
-    List<Notification> getAllNotification();
+    List<NotificationDto> getAllNotification();
     @GetMapping(value = "/search")
-    Page<Notification> search(@RequestParam(defaultValue = "id>0") String query,
+    Page<NotificationDto> search(@RequestParam(defaultValue = "id>0") String query,
                         @RequestParam(defaultValue = "0") Integer page,
                         @RequestParam(defaultValue = "10") Integer size,
                         @RequestParam(defaultValue = "asc") String order,

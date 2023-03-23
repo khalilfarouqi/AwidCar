@@ -1,5 +1,6 @@
 package com.crar.AwidCar.rest.controller;
 
+import com.crar.AwidCar.dto.NotificationDto;
 import com.crar.AwidCar.entity.Notification;
 import com.crar.AwidCar.rest.api.NotificationApi;
 import com.crar.AwidCar.service.NotificationService;
@@ -16,12 +17,12 @@ import java.util.List;
 public class NotificationController implements NotificationApi {
     private final NotificationService notificationService;
     @Override
-    public Notification save(Notification notification) {
+    public NotificationDto save(NotificationDto notification) {
         return notificationService.save(notification);
     }
 
     @Override
-    public Notification update(Notification notification) {
+    public NotificationDto update(NotificationDto notification) {
         return notificationService.update(notification);
     }
 
@@ -31,17 +32,17 @@ public class NotificationController implements NotificationApi {
     }
 
     @Override
-    public Notification getNotificationById(Long id) {
+    public NotificationDto getNotificationById(Long id) {
         return notificationService.findById(id);
     }
 
     @Override
-    public List<Notification> getAllNotification() {
+    public List<NotificationDto> getAllNotification() {
         return notificationService.findAll();
     }
 
     @Override
-    public Page<Notification> search(String query, Integer page, Integer size, String order, String sort) {
+    public Page<NotificationDto> search(String query, Integer page, Integer size, String order, String sort) {
         return notificationService.rsqlQuery(query, page, size, order, sort);
     }
 }

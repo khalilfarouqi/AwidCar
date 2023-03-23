@@ -1,6 +1,6 @@
 package com.crar.AwidCar.rest.controller;
 
-import com.crar.AwidCar.entity.Car;
+import com.crar.AwidCar.dto.CarDto;
 import com.crar.AwidCar.rest.api.CarApi;
 import com.crar.AwidCar.service.*;
 import lombok.RequiredArgsConstructor;
@@ -16,12 +16,12 @@ import java.util.List;
 public class CarController implements CarApi {
     private final CarService carService;
     @Override
-    public Car save(Car car) {
+    public CarDto save(CarDto car) {
         return carService.save(car);
     }
 
     @Override
-    public Car update(Car car) {
+    public CarDto update(CarDto car) {
         return carService.update(car);
     }
 
@@ -31,17 +31,17 @@ public class CarController implements CarApi {
     }
 
     @Override
-    public Car getCarById(Long id) {
+    public CarDto getCarById(Long id) {
         return carService.findById(id);
     }
 
     @Override
-    public List<Car> getAllCar() {
+    public List<CarDto> getAllCar() {
         return carService.findAll();
     }
 
     @Override
-    public Page<Car> search(String query, Integer page, Integer size, String order, String sort) {
+    public Page<CarDto> search(String query, Integer page, Integer size, String order, String sort) {
         return carService.rsqlQuery(query, page, size, order, sort);
     }
 }

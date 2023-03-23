@@ -1,7 +1,6 @@
 package com.crar.AwidCar.rest.api;
 
 import com.crar.AwidCar.dto.PhotoDto;
-import com.crar.AwidCar.entity.Photo;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;

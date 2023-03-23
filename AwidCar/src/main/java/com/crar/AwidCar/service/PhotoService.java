@@ -36,6 +36,7 @@ public class PhotoService implements IBaseService<Photo> {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         photoRepository.deleteById(id);
     }
@@ -58,8 +59,6 @@ public class PhotoService implements IBaseService<Photo> {
         if (size > 20) {
             size = 20;
         }
-        Specification a = RSQLJPASupport.toSpecification(query);
-        var b = PageRequest.of(page, size, Sort.Direction.fromString(order), sort);
-        return photoRepository.findAll(a, b);
+        return photoRepository.findAll(RSQLJPASupport.toSpecification(query), PageRequest.of(page, size, Sort.Direction.fromString(order), sort));
     }
 }

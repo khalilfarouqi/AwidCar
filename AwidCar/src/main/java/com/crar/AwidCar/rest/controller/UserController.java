@@ -1,6 +1,6 @@
 package com.crar.AwidCar.rest.controller;
 
-import com.crar.AwidCar.entity.User;
+import com.crar.AwidCar.dto.UserDto;
 import com.crar.AwidCar.rest.api.UserApi;
 import com.crar.AwidCar.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -16,12 +16,12 @@ import java.util.List;
 public class UserController implements UserApi {
     private final UserService userService;
     @Override
-    public User save(User user) {
+    public UserDto save(UserDto user) {
         return userService.save(user);
     }
 
     @Override
-    public User update(User user) {
+    public UserDto update(UserDto user) {
         return userService.save(user);
     }
 
@@ -31,17 +31,17 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public User getUserById(Long id) {
+    public UserDto getUserById(Long id) {
         return userService.findById(id);
     }
 
     @Override
-    public List<User> getAllUser() {
+    public List<UserDto> getAllUser() {
         return userService.findAll();
     }
 
     @Override
-    public Page<User> search(String query, Integer page, Integer size, String order, String sort) {
+    public Page<UserDto> search(String query, Integer page, Integer size, String order, String sort) {
         return userService.rsqlQuery(query, page, size, order, sort);
     }
 }

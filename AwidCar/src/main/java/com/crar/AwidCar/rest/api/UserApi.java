@@ -1,6 +1,6 @@
 package com.crar.AwidCar.rest.api;
 
-import com.crar.AwidCar.entity.User;
+import com.crar.AwidCar.dto.UserDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -12,17 +12,17 @@ import java.util.List;
 @RequestMapping("/v1/user")
 public interface UserApi {
     @PostMapping
-    User save(@RequestBody User user);
+    UserDto save(@RequestBody UserDto user);
     @PutMapping
-    User update(@RequestBody User user);
+    UserDto update(@RequestBody UserDto user);
     @DeleteMapping(value = "/{id}")
     void delete(@PathVariable Long id);
     @GetMapping(value = "/{id}")
-    User getUserById(@PathVariable("id") Long id);
+    UserDto getUserById(@PathVariable("id") Long id);
     @GetMapping(value = "/getAll")
-    List<User> getAllUser();
+    List<UserDto> getAllUser();
     @GetMapping(value = "/search")
-    Page<User> search(@RequestParam(defaultValue = "id>0") String query,
+    Page<UserDto> search(@RequestParam(defaultValue = "id>0") String query,
                        @RequestParam(defaultValue = "0") Integer page,
                        @RequestParam(defaultValue = "10") Integer size,
                        @RequestParam(defaultValue = "asc") String order,

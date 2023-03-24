@@ -1,39 +1,43 @@
 package com.crar.AwidCar.service;
 
+import com.crar.AwidCar.dto.NotificationDto;
 import com.crar.AwidCar.entity.Notification;
-import com.crar.AwidCar.exception.InvalidInputException;
-import com.crar.AwidCar.exception.ResourceNotFoundException;
+import com.crar.AwidCar.exception.*;
 import com.crar.AwidCar.repository.NotificationRepository;
 import io.github.perplexhub.rsql.RSQLJPASupport;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
-public class NotificationService implements IBaseService<Notification> {
-    private final NotificationRepository notificationRepository;
-
+public class NotificationService implements IBaseService<Notification, NotificationDto> {
+    @Autowired
+    private NotificationRepository notificationRepository;
+    @Autowired
+    private ModelMapper modelMapper;
     @Override
     @Transactional
-    public Notification save(Notification notification) {
-        return notificationRepository.save(notification);
+    public NotificationDto save(NotificationDto notificationDto) {
+        return modelMapper.map(notificationRepository.save(modelMapper.map(notificationDto, Notification.class)), NotificationDto.class);
     }
 
     @Override
     @Transactional
-    public Notification update(Notification notification) {
-        if (findById(notification.getId()).equals(null))
+    public NotificationDto update(NotificationDto notificationDto) {
+        if (findById(notificationDto.getId()).equals(null))
             throw new ResourceNotFoundException("notification not fond");
-        return notificationRepository.save(notification);
+        return modelMapper.map(notificationRepository.save(modelMapper.map(notificationDto, Notification.class)), NotificationDto.class);
     }
 
     @Override
@@ -43,23 +47,30 @@ public class NotificationService implements IBaseService<Notification> {
     }
 
     @Override
-    public Notification findById(Long id) {
-        return notificationRepository.getById(id);
+    public NotificationDto findById(Long id) {
+        NotificationDto notificationDto = modelMapper.map(notificationRepository.findById(id).get(), NotificationDto.class);
+        if (notificationDto == null) throw new InvalidInputException("Notification not fond");
+        return notificationDto;
     }
 
     @Override
-    public List<Notification> findAll() {
-        return notificationRepository.findAll();
+    public List<NotificationDto> findAll() {
+        return notificationRepository.findAll().stream().map(this::convertEntityToDto).collect(Collectors.toList());
+    }
+
+    private NotificationDto convertEntityToDto(Notification notification){
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+        return modelMapper.map(notification, NotificationDto.class);
     }
 
     @Override
-    public Page<Notification> rsqlQuery(String query, Integer page, Integer size, String order, String sort) {
+    public Page<NotificationDto> rsqlQuery(String query, Integer page, Integer size, String order, String sort) {
         if (query.isEmpty()) {
             throw new InvalidInputException("Argument is required");
         }
         if (size > 20) {
             size = 20;
         }
-        return notificationRepository.findAll(RSQLJPASupport.toSpecification(query), PageRequest.of(page, size, Sort.Direction.fromString(order), sort));
+        return (Page<NotificationDto>) modelMapper.map(notificationRepository.findAll(RSQLJPASupport.toSpecification(query), PageRequest.of(page, size, Sort.Direction.fromString(order), sort)), NotificationDto.class);
     }
 }

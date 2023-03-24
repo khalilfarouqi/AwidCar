@@ -1,6 +1,6 @@
 package com.crar.AwidCar.rest.api;
 
-import com.crar.AwidCar.entity.*;
+import com.crar.AwidCar.dto.ClientDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -12,17 +12,17 @@ import java.util.List;
 @RequestMapping("/v1/client")
 public interface ClientApi {
     @PostMapping
-    Client save(@RequestBody Client client);
+    ClientDto save(@RequestBody ClientDto client);
     @PutMapping
-    Client update(@RequestBody Client client);
+    ClientDto update(@RequestBody ClientDto client);
     @DeleteMapping(value = "/{id}")
     void delete(@PathVariable Long id);
     @GetMapping(value = "/{id}")
-    Client getClientById(@PathVariable("id") Long id);
+    ClientDto getClientById(@PathVariable("id") Long id);
     @GetMapping(value = "/getAll")
-    List<Client> getAllClient();
+    List<ClientDto> getAllClient();
     @GetMapping(value = "/search")
-    Page<Client> search(@RequestParam(defaultValue = "id>0") String query,
+    Page<ClientDto> search(@RequestParam(defaultValue = "id>0") String query,
                        @RequestParam(defaultValue = "0") Integer page,
                        @RequestParam(defaultValue = "10") Integer size,
                        @RequestParam(defaultValue = "asc") String order,

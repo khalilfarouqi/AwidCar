@@ -1,6 +1,6 @@
 package com.crar.AwidCar.rest.controller;
 
-import com.crar.AwidCar.entity.Photo;
+import com.crar.AwidCar.dto.PhotoDto;
 import com.crar.AwidCar.rest.api.PhotoApi;
 import com.crar.AwidCar.service.PhotoService;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +17,12 @@ public class PhotoController implements PhotoApi {
     private final PhotoService photoService;
 
     @Override
-    public Photo save(Photo photo) {
+    public PhotoDto save(PhotoDto photo) {
         return photoService.save(photo);
     }
 
     @Override
-    public Photo update(Photo photo) {
+    public PhotoDto update(PhotoDto photo) {
         return photoService.update(photo);
     }
 
@@ -32,17 +32,17 @@ public class PhotoController implements PhotoApi {
     }
 
     @Override
-    public Photo getPhotoById(Long id) {
+    public PhotoDto getPhotoById(Long id) {
         return photoService.findById(id);
     }
 
     @Override
-    public List<Photo> getAllPhoto() {
+    public List<PhotoDto> getAllPhoto() {
         return photoService.findAll();
     }
 
     @Override
-    public Page<Photo> search(String query, Integer page, Integer size, String order, String sort) {
+    public Page<PhotoDto> search(String query, Integer page, Integer size, String order, String sort) {
         return photoService.rsqlQuery(query, page, size, order, sort);
     }
 }

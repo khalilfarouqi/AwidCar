@@ -2,6 +2,8 @@ package com.crar.AwidCar.service;
 
 import org.springframework.data.domain.Page;
 
-public interface IRsqlService<E> {
-    Page<E> rsqlQuery(String query, Integer page, Integer size, String order, String sort);
+import java.io.Serializable;
+
+public interface IRsqlService<E, D extends Serializable> {
+    Page<D> rsqlQuery(String query, Integer page, Integer size, String order, String sort);
 }

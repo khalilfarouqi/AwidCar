@@ -1,5 +1,6 @@
 package com.crar.AwidCar.service;
 
+import com.crar.AwidCar.dto.PhotoDto;
 import com.crar.AwidCar.entity.Photo;
 import com.crar.AwidCar.exception.InvalidInputException;
 import com.crar.AwidCar.exception.ResourceNotFoundException;
@@ -7,32 +8,38 @@ import io.github.perplexhub.rsql.RSQLJPASupport;
 import com.crar.AwidCar.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
-public class PhotoService implements IBaseService<Photo> {
-    private final PhotoRepository photoRepository;
+public class PhotoService implements IBaseService<Photo, PhotoDto> {
+    @Autowired
+    private PhotoRepository photoRepository;
+    @Autowired
+    private ModelMapper modelMapper;
     @Transactional
-    public Photo save(Photo photo){
-        return photoRepository.save(photo);
+    public PhotoDto save(PhotoDto photoDto){
+        return modelMapper.map(photoRepository.save(modelMapper.map(photoDto, Photo.class)), PhotoDto.class);
     }
 
     @Override
     @Transactional
-    public Photo update(Photo photo) {
-        if (findById(photo.getId()).equals(null))
+    public PhotoDto update(PhotoDto photoDto) {
+        if (findById(photoDto.getId()).equals(null))
             throw new ResourceNotFoundException("photo not fond");
-        return photoRepository.save(photo);
+        return modelMapper.map(photoRepository.save(modelMapper.map(photoDto, Photo.class)), PhotoDto.class);
     }
 
     @Override
@@ -42,23 +49,30 @@ public class PhotoService implements IBaseService<Photo> {
     }
 
     @Override
-    public Photo findById(Long id) {
-        return photoRepository.findById(id).get();
+    public PhotoDto findById(Long id) {
+        PhotoDto photoDto = modelMapper.map(photoRepository.findById(id).get(), PhotoDto.class);
+        if (photoDto == null) throw new InvalidInputException("Photo not fond");
+        return photoDto;
+    }
+
+    private PhotoDto convertEntityToDto(Photo photo){
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+        return modelMapper.map(photo, PhotoDto.class);
     }
 
     @Override
-    public List<Photo> findAll() {
-        return photoRepository.findAll();
+    public List<PhotoDto> findAll() {
+        return photoRepository.findAll().stream().map(this::convertEntityToDto).collect(Collectors.toList());
     }
 
     @Override
-    public Page<Photo> rsqlQuery(String query, Integer page, Integer size, String order, String sort) {
+    public Page<PhotoDto> rsqlQuery(String query, Integer page, Integer size, String order, String sort) {
         if (query.isEmpty()) {
             throw new InvalidInputException("Argument is required");
         }
         if (size > 20) {
             size = 20;
         }
-        return photoRepository.findAll(RSQLJPASupport.toSpecification(query), PageRequest.of(page, size, Sort.Direction.fromString(order), sort));
+        return (Page<PhotoDto>) modelMapper.map(photoRepository.findAll(RSQLJPASupport.toSpecification(query), PageRequest.of(page, size, Sort.Direction.fromString(order), sort)), PhotoDto.class);
     }
 }

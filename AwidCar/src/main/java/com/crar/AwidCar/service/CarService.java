@@ -1,39 +1,44 @@
 package com.crar.AwidCar.service;
 
+import com.crar.AwidCar.dto.CarDto;
 import com.crar.AwidCar.entity.Car;
-import com.crar.AwidCar.exception.InvalidInputException;
-import com.crar.AwidCar.exception.ResourceNotFoundException;
+import com.crar.AwidCar.exception.*;
 import com.crar.AwidCar.repository.CarRepository;
 import io.github.perplexhub.rsql.RSQLJPASupport;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
-public class CarService implements IBaseService<Car> {
-    private final CarRepository carRepository;
+public class CarService implements IBaseService<Car, CarDto> {
+    @Autowired
+    private CarRepository carRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     @Transactional
-    public Car save(Car car) {
-        return carRepository.save(car);
+    public CarDto save(CarDto carDto) {
+        return modelMapper.map(carRepository.save(modelMapper.map(carDto, Car.class)), CarDto.class);
     }
 
     @Override
     @Transactional
-    public Car update(Car car) {
-        if (findById(car.getId()).equals(null))
+    public CarDto update(CarDto carDto) {
+        if (findById(carDto.getId()).equals(null))
             throw new ResourceNotFoundException("car not fond");
-        return carRepository.save(car);
+        return modelMapper.map(carRepository.save(modelMapper.map(carDto, Car.class)), CarDto.class);
     }
 
     @Override
@@ -43,23 +48,30 @@ public class CarService implements IBaseService<Car> {
     }
 
     @Override
-    public Car findById(Long id) {
-        return carRepository.findById(id).get();
+    public CarDto findById(Long id) {
+        CarDto carDto = modelMapper.map(carRepository.findById(id).get(), CarDto.class);
+        if (carDto == null) throw new InvalidInputException("Car not fond");
+        return carDto;
     }
 
     @Override
-    public List<Car> findAll() {
-        return carRepository.findAll();
+    public List<CarDto> findAll() {
+        return carRepository.findAll().stream().map(this::convertEntityToDto).collect(Collectors.toList());
+    }
+
+    private CarDto convertEntityToDto(Car car){
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+        return modelMapper.map(car, CarDto.class);
     }
 
     @Override
-    public Page<Car> rsqlQuery(String query, Integer page, Integer size, String order, String sort) {
+    public Page<CarDto> rsqlQuery(String query, Integer page, Integer size, String order, String sort) {
         if (query.isEmpty()) {
             throw new InvalidInputException("Argument is required");
         }
         if (size > 20) {
             size = 20;
         }
-        return carRepository.findAll(RSQLJPASupport.toSpecification(query), PageRequest.of(page, size, Sort.Direction.fromString(order), sort));
+        return (Page<CarDto>) modelMapper.map(carRepository.findAll(RSQLJPASupport.toSpecification(query), PageRequest.of(page, size, Sort.Direction.fromString(order), sort)), CarDto.class);
     }
 }

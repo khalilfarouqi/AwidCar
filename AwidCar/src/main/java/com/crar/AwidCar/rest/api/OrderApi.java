@@ -1,6 +1,6 @@
 package com.crar.AwidCar.rest.api;
 
-import com.crar.AwidCar.entity.*;
+import com.crar.AwidCar.dto.OrderDto;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -12,17 +12,17 @@ import java.util.List;
 @RequestMapping("/v1/order")
 public interface OrderApi {
     @PostMapping
-    Order save(@RequestBody Order order);
+    OrderDto save(@RequestBody OrderDto order);
     @PutMapping
-    Order update(@RequestBody Order order);
+    OrderDto update(@RequestBody OrderDto order);
     @DeleteMapping(value = "/{id}")
     void delete(@PathVariable Long id);
     @GetMapping(value = "/{id}")
-    Order getOrderById(@PathVariable("id") Long id);
+    OrderDto getOrderById(@PathVariable("id") Long id);
     @GetMapping(value = "/getAll")
-    List<Order> getAllOrder();
+    List<OrderDto> getAllOrder();
     @GetMapping(value = "/search")
-    Page<Order> search(@RequestParam(defaultValue = "id>0") String query,
+    Page<OrderDto> search(@RequestParam(defaultValue = "id>0") String query,
                       @RequestParam(defaultValue = "0") Integer page,
                       @RequestParam(defaultValue = "10") Integer size,
                       @RequestParam(defaultValue = "asc") String order,

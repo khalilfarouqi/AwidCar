@@ -1,39 +1,44 @@
 package com.crar.AwidCar.service;
 
+import com.crar.AwidCar.dto.NotificationGroupDto;
 import com.crar.AwidCar.entity.NotificationGroup;
-import com.crar.AwidCar.exception.InvalidInputException;
-import com.crar.AwidCar.exception.ResourceNotFoundException;
+import com.crar.AwidCar.exception.*;
 import com.crar.AwidCar.repository.NotificationGroupRepository;
 import io.github.perplexhub.rsql.RSQLJPASupport;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
-public class NotificationGroupService implements IBaseService<NotificationGroup> {
-    private final NotificationGroupRepository notificationGroupRepository;
+public class NotificationGroupService implements IBaseService<NotificationGroup, NotificationGroupDto> {
+    @Autowired
+    private NotificationGroupRepository notificationGroupRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     @Transactional
-    public NotificationGroup save(NotificationGroup notificationGroup) {
-        return notificationGroupRepository.save(notificationGroup);
+    public NotificationGroupDto save(NotificationGroupDto notificationGroupDto) {
+        return modelMapper.map(notificationGroupRepository.save(modelMapper.map(notificationGroupDto, NotificationGroup.class)), NotificationGroupDto.class);
     }
 
     @Override
     @Transactional
-    public NotificationGroup update(NotificationGroup notificationGroup) {
-        if (findById(notificationGroup.getId()).equals(null))
-            throw new ResourceNotFoundException("Notification Group not fond");
-        return notificationGroupRepository.save(notificationGroup);
+    public NotificationGroupDto update(NotificationGroupDto notificationGroupDto) {
+        Boolean exist = findById(notificationGroupDto.getId()).getNotificationWeb();
+        if (exist == false) throw new ResourceNotFoundException("Notification Group not fond");
+        return modelMapper.map(notificationGroupRepository.save(modelMapper.map(notificationGroupDto, NotificationGroup.class)), NotificationGroupDto.class);
     }
 
     @Override
@@ -43,23 +48,30 @@ public class NotificationGroupService implements IBaseService<NotificationGroup>
     }
 
     @Override
-    public NotificationGroup findById(Long id) {
-        return notificationGroupRepository.findById(id).get();
+    public NotificationGroupDto findById(Long id) {
+        NotificationGroupDto notificationGroupDto = modelMapper.map(notificationGroupRepository.findById(id).get(), NotificationGroupDto.class);
+        if (notificationGroupDto == null) throw new InvalidInputException("notification Group not fond");
+        return notificationGroupDto;
     }
 
     @Override
-    public List<NotificationGroup> findAll() {
-        return notificationGroupRepository.findAll();
+    public List<NotificationGroupDto> findAll() {
+        return notificationGroupRepository.findAll().stream().map(this::convertEntityToDto).collect(Collectors.toList());
+    }
+
+    private NotificationGroupDto convertEntityToDto(NotificationGroup notificationGroup){
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+        return modelMapper.map(notificationGroup, NotificationGroupDto.class);
     }
 
     @Override
-    public Page<NotificationGroup> rsqlQuery(String query, Integer page, Integer size, String order, String sort) {
+    public Page<NotificationGroupDto> rsqlQuery(String query, Integer page, Integer size, String order, String sort) {
         if (query.isEmpty()) {
             throw new InvalidInputException("Argument is required");
         }
         if (size > 20) {
             size = 20;
         }
-        return notificationGroupRepository.findAll(RSQLJPASupport.toSpecification(query), PageRequest.of(page, size, Sort.Direction.fromString(order), sort));
+        return (Page<NotificationGroupDto>) modelMapper.map(notificationGroupRepository.findAll(RSQLJPASupport.toSpecification(query), PageRequest.of(page, size, Sort.Direction.fromString(order), sort)), NotificationGroupDto.class);
     }
 }

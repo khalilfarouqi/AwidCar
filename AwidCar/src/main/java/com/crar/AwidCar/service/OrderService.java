@@ -2,42 +2,43 @@ package com.crar.AwidCar.service;
 
 import com.crar.AwidCar.dto.OrderDto;
 import com.crar.AwidCar.entity.Order;
-import com.crar.AwidCar.exception.ResourceNotFoundException;
-import com.crar.AwidCar.mapper.NotificationGroupMapper;
-import com.crar.AwidCar.mapper.OrderMapper;
+import com.crar.AwidCar.exception.*;
 import com.crar.AwidCar.repository.OrderRepository;
 import io.github.perplexhub.rsql.RSQLJPASupport;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.mapstruct.factory.Mappers;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
 public class OrderService implements IBaseService<Order, OrderDto> {
-    private final OrderRepository orderRepository;
-    private final OrderMapper orderMapper = Mappers.getMapper(OrderMapper.class);
+    @Autowired
+    private OrderRepository orderRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     @Transactional
-    public OrderDto save(OrderDto order) {
-        return orderMapper.toDto(orderRepository.save(orderMapper.toEntity(order)));
+    public OrderDto save(OrderDto orderDto) {
+        return modelMapper.map(orderRepository.save(modelMapper.map(orderDto, Order.class)), OrderDto.class);
     }
 
     @Override
     @Transactional
-    public OrderDto update(OrderDto order) {
-        if (findById(order.getId()).equals(null))
+    public OrderDto update(OrderDto orderDto) {
+        if (findById(orderDto.getId()).equals(null))
             throw new ResourceNotFoundException("Order not fond");
-        return orderMapper.toDto(orderRepository.save(orderMapper.toEntity(order)));
+        return modelMapper.map(orderRepository.save(modelMapper.map(orderDto, Order.class)), OrderDto.class);
     }
 
     @Override
@@ -48,16 +49,29 @@ public class OrderService implements IBaseService<Order, OrderDto> {
 
     @Override
     public OrderDto findById(Long id) {
-        return orderMapper.toDto(orderRepository.findById(id).get());
+        OrderDto orderDto = modelMapper.map(orderRepository.findById(id).get(), OrderDto.class);
+        if (orderDto == null) throw new InvalidInputException("Order not fond");
+        return orderDto;
     }
 
     @Override
     public List<OrderDto> findAll() {
-        return orderMapper.toDto(orderRepository.findAll());
+        return orderRepository.findAll().stream().map(this::convertEntityToDto).collect(Collectors.toList());
+    }
+
+    private OrderDto convertEntityToDto(Order order){
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+        return modelMapper.map(order, OrderDto.class);
     }
 
     @Override
     public Page<OrderDto> rsqlQuery(String query, Integer page, Integer size, String order, String sort) {
-        return orderMapper.toDto(orderRepository.findAll(RSQLJPASupport.toSpecification(query), PageRequest.of(page, size, Sort.Direction.fromString(order), sort)));
+        if (query.isEmpty()) {
+            throw new InvalidInputException("Argument is required");
+        }
+        if (size > 20) {
+            size = 20;
+        }
+        return (Page<OrderDto>) modelMapper.map(orderRepository.findAll(RSQLJPASupport.toSpecification(query), PageRequest.of(page, size, Sort.Direction.fromString(order), sort)), OrderDto.class);
     }
 }

@@ -2,41 +2,42 @@ package com.crar.AwidCar.service;
 
 import com.crar.AwidCar.dto.UserDto;
 import com.crar.AwidCar.entity.User;
-import com.crar.AwidCar.exception.InvalidInputException;
-import com.crar.AwidCar.exception.ResourceNotFoundException;
-import com.crar.AwidCar.mapper.UserMapper;
+import com.crar.AwidCar.exception.*;
 import com.crar.AwidCar.repository.*;
 import io.github.perplexhub.rsql.RSQLJPASupport;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.mapstruct.factory.Mappers;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
 public class UserService implements IBaseService<User, UserDto> {
-    private final UserRepository userRepository;
-    private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private ModelMapper modelMapper;
     @Override
     @Transactional
-    public UserDto save(UserDto user) {
-        return userMapper.toDto(userRepository.save(userMapper.toEntity(user)));
+    public UserDto save(UserDto userDto) {
+        return modelMapper.map(userRepository.save(modelMapper.map(userDto, User.class)), UserDto.class);
     }
 
     @Override
     @Transactional
-    public UserDto update(UserDto user) {
-        if (findById(user.getId()).equals(null))
+    public UserDto update(UserDto userDto) {
+        if (findById(userDto.getId()).equals(null))
             throw new ResourceNotFoundException("user not fond");
-        return userMapper.toDto(userRepository.save(userMapper.toEntity(user)));
+        return modelMapper.map(userRepository.save(modelMapper.map(userDto, User.class)), UserDto.class);
     }
 
     @Override
@@ -47,12 +48,19 @@ public class UserService implements IBaseService<User, UserDto> {
 
     @Override
     public UserDto findById(Long id) {
-        return userMapper.toDto(userRepository.findById(id).get());
+        UserDto userDto = modelMapper.map(userRepository.findById(id).get(), UserDto.class);
+        if (userDto == null) throw new InvalidInputException("User not fond");
+        return userDto;
     }
 
     @Override
     public List<UserDto> findAll() {
-        return userMapper.toDto(userRepository.findAll());
+        return userRepository.findAll().stream().map(this::convertEntityToDto).collect(Collectors.toList());
+    }
+
+    private UserDto convertEntityToDto(User user){
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+        return modelMapper.map(user, UserDto.class);
     }
 
     @Override
@@ -63,6 +71,6 @@ public class UserService implements IBaseService<User, UserDto> {
         if (size > 20) {
             size = 20;
         }
-        return userMapper.toDto(userRepository.findAll(RSQLJPASupport.toSpecification(query), PageRequest.of(page, size, Sort.Direction.fromString(order), sort)));
+        return (Page<UserDto>) modelMapper.map(userRepository.findAll(RSQLJPASupport.toSpecification(query), PageRequest.of(page, size, Sort.Direction.fromString(order), sort)), UserDto.class);
     }
 }

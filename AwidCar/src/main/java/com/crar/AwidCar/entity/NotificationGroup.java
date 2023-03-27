@@ -1,7 +1,7 @@
 package com.crar.AwidCar.entity;
 
 import com.crar.AwidCar.entity.enums.NotificationType;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 import java.util.Date;

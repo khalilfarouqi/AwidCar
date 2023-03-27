@@ -1,10 +1,10 @@
 package com.crar.AwidCar.entity;
 
 import com.crar.AwidCar.entity.enums.*;
-import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.*;
 import java.util.Date;
 
 @NoArgsConstructor

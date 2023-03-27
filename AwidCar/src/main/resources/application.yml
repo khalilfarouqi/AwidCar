@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/Car_Rental
+    username: postgres
+    password: khalil
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+server:
+  port: 8090
+
+keycloak:
+  realm: AwidCar
+  auth-server-url: http://localhost:8280/auth
+  resource: AwidCar
+  public-client: true
+  bearer-only: true

@@ -1,6 +1,7 @@
 package com.crar.AwidCar.rest.controller;
 
 import com.crar.AwidCar.dto.ClientDto;
+import com.crar.AwidCar.entity.Roles;
 import com.crar.AwidCar.rest.api.ClientApi;
 import com.crar.AwidCar.service.ClientService;
 import lombok.RequiredArgsConstructor;
@@ -8,11 +9,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
 @RestController
+@RolesAllowed({Roles.admin, Roles.client})
 public class ClientController implements ClientApi {
     private final ClientService clientService;
     @Override
@@ -26,6 +29,7 @@ public class ClientController implements ClientApi {
     }
 
     @Override
+    @RolesAllowed(Roles.admin)
     public void delete(Long id) {
         clientService.delete(id);
     }

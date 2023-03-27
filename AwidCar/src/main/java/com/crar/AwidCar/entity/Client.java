@@ -59,4 +59,7 @@ public class Client extends User {
 
     @Column(name = "VolNumber")
     private int volNumber;
+
+    @Column(name = "IsActive")
+    private Boolean isActive;
 }

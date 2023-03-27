@@ -65,6 +65,7 @@ create table if not exists Clients (
     DateLicence     timestamp(6),
     DateCreation    timestamp(6),
     Email           varchar(255),
+    isActive         boolean,
     VolNumber       integer
     ) INHERITS (users);
 create table if not exists orders (
@@ -77,6 +78,7 @@ create table if not exists orders (
     return_city    varchar(255),
     start_date     timestamp(6),
     type_insurance varchar(255),
+    isActive         boolean,
     car_id         bigint not null references cars(id),
     user_id        bigint not null references users(id)
     );

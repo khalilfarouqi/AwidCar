@@ -47,4 +47,14 @@ public class UserController implements UserApi {
     public Page<UserDto> search(String query, Integer page, Integer size, String order, String sort) {
         return userService.rsqlQuery(query, page, size, order, sort);
     }
+
+    @Override
+    public UserDto findByUsername(String username) {
+        return userService.findByUsername(username);
+    }
+
+    @Override
+    public Boolean existsByUsername(String username) {
+        return userService.existsByUsername(username);
+    }
 }

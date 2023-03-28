@@ -27,4 +27,8 @@ public interface UserApi {
                        @RequestParam(defaultValue = "10") Integer size,
                        @RequestParam(defaultValue = "asc") String order,
                        @RequestParam(defaultValue = "id") String sort);
+    @GetMapping(value = "/findByUsername/{username}")
+    UserDto findByUsername(@PathVariable("username") String username);
+    @GetMapping(value = "/existsByUsername/{username}")
+    Boolean existsByUsername(@PathVariable("username") String username);
 }

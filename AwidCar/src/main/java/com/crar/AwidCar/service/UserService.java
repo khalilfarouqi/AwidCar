@@ -58,9 +58,17 @@ public class UserService implements IBaseService<User, UserDto> {
         return userRepository.findAll().stream().map(this::convertEntityToDto).collect(Collectors.toList());
     }
 
-    private UserDto convertEntityToDto(User user){
+    public UserDto convertEntityToDto(User user){
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
         return modelMapper.map(user, UserDto.class);
+    }
+
+    public UserDto findByUsername(String username){
+        return modelMapper.map(userRepository.findByUsername(username), UserDto.class);
+    }
+
+    public Boolean existsByUsername(String username){
+        return userRepository.existsByUsername(username);
     }
 
     @Override

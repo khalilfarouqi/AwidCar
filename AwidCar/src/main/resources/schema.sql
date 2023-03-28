@@ -36,6 +36,7 @@ create table if not exists users (
     pass_word     varchar(255),
     user_name     varchar(255),
     adress        varchar(255),
+    roles         varchar(255),
     age           integer,
     cin           varchar(255),
     city          varchar(255),

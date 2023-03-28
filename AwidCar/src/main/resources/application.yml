@@ -20,3 +20,5 @@ keycloak:
   resource: AwidCar
   public-client: true
   bearer-only: true
+  credentials :
+    secret : 78d650c9-89b8-463c-91c0-15c6440bd3e7

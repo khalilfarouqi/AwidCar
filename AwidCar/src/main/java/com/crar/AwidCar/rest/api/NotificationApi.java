@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @Tag(name = "Notification", description = "REST API for Notification information")
 @RequestMapping("/v1/notification")
 public interface NotificationApi {

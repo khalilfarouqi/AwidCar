@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @Tag(name = "Photo", description = "REST API for Photo information")
 @RequestMapping("/v1/photo")
 public interface PhotoApi {

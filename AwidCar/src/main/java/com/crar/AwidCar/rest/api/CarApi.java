@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 
 
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @Tag(name = "Car", description = "REST API for Car information")
 @RequestMapping("/v1/car")
 public interface CarApi {

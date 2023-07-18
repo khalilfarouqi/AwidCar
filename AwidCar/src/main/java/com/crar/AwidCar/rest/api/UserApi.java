@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @Tag(name = "User", description = "REST API for User information")
 @RequestMapping("/v1/user")
 public interface UserApi {

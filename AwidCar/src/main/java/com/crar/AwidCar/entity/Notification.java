@@ -22,7 +22,7 @@ public class Notification {
     private Boolean notificationWeb;
 
     @ManyToOne
-    private User user;
+    private User users;
 
     @OneToOne
     private NotificationGroup notificationGroup;

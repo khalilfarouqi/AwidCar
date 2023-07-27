@@ -14,7 +14,6 @@ public class CarDto implements Serializable {
     private Long id;
     private String name;
     private Brande brande;
-    private String matricule;
     private Double mileage;
     private int model;
     private int horsPower;
@@ -33,6 +32,7 @@ public class CarDto implements Serializable {
     private Boolean protectionVol;
     private Boolean respoCivile;
     private Boolean brisGlacePneus;
+    private ImmatriculationDto immatriculationDto;
     private PhotoDto photoDto;
     private List<OrderDto> orderDtoList;
 }

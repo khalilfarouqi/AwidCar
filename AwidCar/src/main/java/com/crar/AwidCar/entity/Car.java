@@ -23,9 +23,6 @@ public class Car {
     @Column(name = "Brande")
     private Brande brande;
 
-    @Column(name = "Matricule")
-    private String matricule;
-
     @Column(name = "Mileage")
     private Double mileage;
 
@@ -86,6 +83,10 @@ public class Car {
     private Boolean brisGlacePneus;
 
     //-----------------------------------------------
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "immatriculation_id", referencedColumnName = "id")
+    private Immatriculation immatriculation;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "photo_id", referencedColumnName = "id")

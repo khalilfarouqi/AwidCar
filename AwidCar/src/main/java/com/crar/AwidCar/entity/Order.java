@@ -46,10 +46,10 @@ public class Order {
     private String orderStatus;
 
     @ManyToOne
-    @JoinColumn(name="car_id", nullable=false)
+    @JoinColumn(name = "car_id", nullable = false)
     private Car car;
 
     @ManyToOne
-    @JoinColumn(name="user_id", nullable=false)
-    private User user;
+    @JoinColumn(name="client_id", nullable = false)
+    private Client client;
 }

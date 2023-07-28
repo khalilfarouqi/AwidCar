@@ -24,7 +24,4 @@ public class Photo {
 
     @Column(name = "Photo4")
     private String photo4;
-
-    @OneToOne(mappedBy = "photo")
-    private Car car;
 }

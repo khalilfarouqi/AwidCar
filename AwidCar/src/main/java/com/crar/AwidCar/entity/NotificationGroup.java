@@ -18,7 +18,6 @@ public class NotificationGroup {
 
     private String object;
 
-    @Column(columnDefinition = "NVARCHAR(MAX)")
     private String body;
 
     @Column(nullable = false)

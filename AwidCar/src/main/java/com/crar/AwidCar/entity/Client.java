@@ -6,14 +6,28 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Data
 @Entity
 @Table(name="Clients")
-public class Client extends User {
+public class Client {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @Column(name = "LastCheckIn")
+    private Date lastCheckIn;
+
+    @Column(name = "UserName")
+    private String userName;
+
+    @Column(name = "PassWord")
+    private String passWord;
+
     @Column(name = "FirstName")
     private String firstName;
 
@@ -59,4 +73,10 @@ public class Client extends User {
 
     @Column(name = "VolNumber")
     private int volNumber;
+
+    @OneToMany(mappedBy = "client")
+    private List<Order> orders;
+
+    @OneToMany(mappedBy = "client")
+    private List<Notification> notifications;
 }

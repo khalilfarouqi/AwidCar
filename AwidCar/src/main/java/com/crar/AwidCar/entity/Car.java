@@ -84,14 +84,14 @@ public class Car {
 
     //-----------------------------------------------
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "immatriculation_id", referencedColumnName = "id")
+    @OneToOne
+    @JoinColumn(name = "immatriculation_id")
     private Immatriculation immatriculation;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "photo_id", referencedColumnName = "id")
+    @OneToOne
+    @JoinColumn(name = "photo_id")
     private Photo photo;
 
-    @OneToMany(mappedBy = "car")
-    private List<Order> orders;
+    @OneToMany(mappedBy = "car", fetch = FetchType.EAGER)
+    private List<Order> orderList;
 }

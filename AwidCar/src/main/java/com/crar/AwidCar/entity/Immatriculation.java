@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name="Immatriculations")
-public class Immatriculation  {
+public class Immatriculation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,9 +25,7 @@ public class Immatriculation  {
     private Series series;
 
     @ManyToOne
-    @JoinColumn(name="prefecture_ref_id", nullable=false)
+    @JoinColumn(name="prefecture_ref_id", nullable = false)
     private PrefectureRef prefectureRef;
 
-    @OneToOne(mappedBy = "immatriculation")
-    private Car car;
 }

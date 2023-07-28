@@ -25,7 +25,4 @@ public class User {
 
     @Column(name = "PassWord")
     private String passWord;
-
-    @OneToMany(mappedBy = "user")
-    private List<Order> orders;
 }

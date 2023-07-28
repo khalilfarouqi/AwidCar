@@ -25,7 +25,7 @@ public class PrefectureRef {
     @Column(name = "Prefecture")
     private Prefecture prefecture;
 
-    @OneToMany(mappedBy = "prefectureRef")
+    @OneToMany(mappedBy = "prefectureRef", fetch = FetchType.EAGER)
     private List<Immatriculation> immatriculations;
 
 }

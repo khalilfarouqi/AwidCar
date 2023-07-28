@@ -14,7 +14,6 @@ public class Notification {
     private Long id;
     private String object;
 
-    @Column(columnDefinition = "NVARCHAR(MAX)")
     private String body;
 
     private Boolean isRead;
@@ -22,8 +21,10 @@ public class Notification {
     private Boolean notificationWeb;
 
     @ManyToOne
-    private User users;
+    @JoinColumn(name="client_id", nullable = false)
+    private Client client;
 
     @OneToOne
+    @JoinColumn(name = "notification_group_id")
     private NotificationGroup notificationGroup;
 }

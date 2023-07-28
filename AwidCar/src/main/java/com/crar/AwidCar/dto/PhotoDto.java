@@ -15,5 +15,4 @@ public class PhotoDto implements Serializable {
     private String photo2;
     private String photo3;
     private String photo4;
-    private CarDto carDto;
 }

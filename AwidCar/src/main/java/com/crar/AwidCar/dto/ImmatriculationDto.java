@@ -14,5 +14,4 @@ public class ImmatriculationDto implements Serializable {
     private int carNumber;
     private Series series;
     private PrefectureRefDto prefectureRefDto;
-    private CarDto carDto;
 }

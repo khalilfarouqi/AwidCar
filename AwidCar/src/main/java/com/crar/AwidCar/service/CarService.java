@@ -49,7 +49,7 @@ public class CarService implements IBaseService<Car, CarDto> {
 
     @Override
     public CarDto findById(Long id) {
-        CarDto carDto = modelMapper.map(carRepository.findById(id).get(), CarDto.class);
+        CarDto carDto = modelMapper.map(carRepository.getById(id), CarDto.class);
         if (carDto == null) throw new InvalidInputException("Car not fond");
         return carDto;
     }

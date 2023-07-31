@@ -1,6 +1,8 @@
 package com.crar.AwidCar.service;
 
+import com.crar.AwidCar.dto.CarDto;
 import com.crar.AwidCar.dto.ClientDto;
+import com.crar.AwidCar.entity.Car;
 import com.crar.AwidCar.entity.Client;
 import com.crar.AwidCar.exception.*;
 import com.crar.AwidCar.repository.ClientRepository;
@@ -8,12 +10,14 @@ import io.github.perplexhub.rsql.RSQLJPASupport;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Transactional(readOnly = true)
@@ -53,7 +57,12 @@ public class ClientService implements IBaseService<Client, ClientDto> {
 
     @Override
     public List<ClientDto> findAll() {
-        return (List<ClientDto>) modelMapper.map(clientRepository.findAll(), ClientDto.class);
+        return clientRepository.findAll().stream().map(this::convertEntityToDto).collect(Collectors.toList());
+    }
+
+    private ClientDto convertEntityToDto(Client client){
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+        return modelMapper.map(client, ClientDto.class);
     }
 
     @Override

@@ -13,5 +13,6 @@ public class ImmatriculationDto implements Serializable {
     private Long id;
     private int carNumber;
     private Series series;
+
     private PrefectureRefDto prefectureRef;
 }

@@ -1,7 +1,7 @@
 package com.crar.AwidCar.dto;
 
-import com.crar.AwidCar.entity.Immatriculation;
 import com.crar.AwidCar.entity.enums.Prefecture;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,5 +16,7 @@ public class PrefectureRefDto implements Serializable {
     private Long id;
     private int code;
     private Prefecture prefecture;
+
+    @JsonIgnore
     private List<ImmatriculationDto> immatriculationsDtos;
 }

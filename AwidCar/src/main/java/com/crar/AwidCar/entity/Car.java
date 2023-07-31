@@ -85,7 +85,7 @@ public class Car {
     //-----------------------------------------------
 
     @OneToOne
-    @JoinColumn(name = "immatriculation_id")
+    @JoinColumn(name = "immatriculation_id", unique = true)
     private Immatriculation immatriculation;
 
     @OneToOne

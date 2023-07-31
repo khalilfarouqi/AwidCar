@@ -1,6 +1,7 @@
 package com.crar.AwidCar.entity;
 
 import com.crar.AwidCar.entity.enums.Prefecture;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,6 +26,7 @@ public class PrefectureRef {
     private Prefecture prefecture;
 
     @OneToMany(mappedBy = "prefectureRef", fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Immatriculation> immatriculations;
 
 }

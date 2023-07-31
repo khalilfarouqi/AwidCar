@@ -1,15 +1,14 @@
 package com.crar.AwidCar.entity;
 
 import com.crar.AwidCar.entity.enums.Series;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name="Immatriculations")
 public class Immatriculation {

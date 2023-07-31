@@ -32,7 +32,7 @@ public class CarDto implements Serializable {
     private Boolean protectionVol;
     private Boolean respoCivile;
     private Boolean brisGlacePneus;
-    private ImmatriculationDto immatriculationDto;
-    private PhotoDto photoDto;
+    private ImmatriculationDto immatriculation;
+    private PhotoDto photo;
     private List<OrderDto> orderDtoList;
 }

@@ -21,6 +21,6 @@ public class OrderDto implements Serializable {
     private int clientAge;
     private String typeInsurance;
     private String orderStatus;
-    private CarDto carDto;
-    private ClientDto clientDto;
+    private CarDto car;
+    private ClientDto client;
 }

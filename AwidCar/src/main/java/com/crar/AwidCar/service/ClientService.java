@@ -37,8 +37,6 @@ public class ClientService implements IBaseService<Client, ClientDto> {
     @Override
     @Transactional
     public ClientDto update(ClientDto client) {
-        Boolean exist = findById(client.getId()).getOrderDtoList().isEmpty();
-        if (exist == false) throw new InvalidInputException("client not fond");
         return modelMapper.map(clientRepository.save(modelMapper.map(client, Client.class)), ClientDto.class);
     }
 

@@ -8,7 +8,8 @@ import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name="NotificationGroups")
 public class NotificationGroup {

@@ -10,7 +10,8 @@ import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name="Clients")
 public class Client {
@@ -61,11 +62,11 @@ public class Client {
     private String licence;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @Column(name = "DateLicence")
+    @Column(name = "Date_licence")
     private Date dateLicence;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @Column(name = "DateCreation")
+    @Column(name = "Date_creation")
     private Date dateCreation;
 
     @Column(name = "Email")
@@ -73,10 +74,4 @@ public class Client {
 
     @Column(name = "VolNumber")
     private int volNumber;
-
-    @OneToMany(mappedBy = "client")
-    private List<Order> orders;
-
-    @OneToMany(mappedBy = "client")
-    private List<Notification> notifications;
 }

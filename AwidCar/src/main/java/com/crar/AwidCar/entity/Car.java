@@ -1,6 +1,7 @@
 package com.crar.AwidCar.entity;
 
 import com.crar.AwidCar.entity.enums.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -8,7 +9,8 @@ import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name="Cars")
 public class Car {
@@ -91,7 +93,4 @@ public class Car {
     @OneToOne
     @JoinColumn(name = "photo_id")
     private Photo photo;
-
-    @OneToMany(mappedBy = "car", fetch = FetchType.EAGER)
-    private List<Order> orderList;
 }

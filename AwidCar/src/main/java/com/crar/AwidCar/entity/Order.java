@@ -9,13 +9,17 @@ import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name="Orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "Etat")
+    private Etat etat;
 
     @Column(name = "Contry")
     private String contry;
@@ -29,21 +33,24 @@ public class Order {
     private City returnCity;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @Column(name = "StartDate")
+    @Column(name = "Start_date")
     private Date startDate;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @Column(name = "EndDate")
+    @Column(name = "End_date")
     private Date endDate;
-
-    @Column(name = "ClientAge")
-    private int clientAge;
 
     @Column(name = "TypeInsurance")
     private String typeInsurance;
 
     @Column(name = "OrderStatus")
     private String orderStatus;
+
+    @Column(name = "Numbre_Days_Reserved")
+    private int numbreDaysReserved;
+
+    @Column(name = "Total")
+    private double total;
 
     @ManyToOne
     @JoinColumn(name = "car_id", nullable = false)

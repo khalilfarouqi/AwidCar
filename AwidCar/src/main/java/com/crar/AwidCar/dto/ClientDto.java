@@ -1,6 +1,7 @@
 package com.crar.AwidCar.dto;
 
 import com.crar.AwidCar.entity.enums.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
@@ -25,6 +26,4 @@ public class ClientDto extends UserDto implements Serializable {
     private Date dateCreation;
     private String email;
     private int volNumbre;
-    private List<OrderDto> orderDtoList;
-    private List<NotificationDto> notificationDtoList;
 }

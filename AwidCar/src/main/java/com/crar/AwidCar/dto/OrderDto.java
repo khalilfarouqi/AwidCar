@@ -1,6 +1,7 @@
 package com.crar.AwidCar.dto;
 
 import com.crar.AwidCar.entity.enums.City;
+import com.crar.AwidCar.entity.enums.Etat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,14 +14,16 @@ import java.util.Date;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderDto implements Serializable {
     private Long id;
+    private Etat etat;
     private String country;
     private City bookingCity;
     private City returnCity;
     private Date startDate;
     private Date endDate;
-    private int clientAge;
     private String typeInsurance;
     private String orderStatus;
+    private int numbreDaysReserved;
+    private double total;
     private CarDto car;
     private ClientDto client;
 }

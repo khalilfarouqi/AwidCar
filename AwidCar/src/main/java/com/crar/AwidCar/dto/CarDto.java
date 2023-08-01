@@ -1,6 +1,7 @@
 package com.crar.AwidCar.dto;
 
 import com.crar.AwidCar.entity.enums.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
@@ -34,5 +35,4 @@ public class CarDto implements Serializable {
     private Boolean brisGlacePneus;
     private ImmatriculationDto immatriculation;
     private PhotoDto photo;
-    private List<OrderDto> orderDtoList;
 }

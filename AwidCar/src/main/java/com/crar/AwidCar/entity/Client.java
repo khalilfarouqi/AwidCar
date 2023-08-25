@@ -6,7 +6,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -74,4 +73,7 @@ public class Client {
 
     @Column(name = "VolNumber")
     private int volNumber;
+
+    @Column(name = "Image")
+    private String image;
 }

@@ -1,7 +1,6 @@
 package com.crar.AwidCar.rest.api;
 
 import com.crar.AwidCar.dto.NotificationDto;
-import com.crar.AwidCar.entity.*;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -28,4 +27,8 @@ public interface NotificationApi {
                         @RequestParam(defaultValue = "10") Integer size,
                         @RequestParam(defaultValue = "asc") String order,
                         @RequestParam(defaultValue = "id") String sort);
+    @GetMapping(value = "/getByNotificationGroupId/{id}")
+    List<NotificationDto> getByNotificationGroupId(@PathVariable("id") Long id);
+    @GetMapping(value = "/getByClientId/{id}")
+    List<NotificationDto> getByClientId(@PathVariable("id") Long id);
 }

@@ -1,7 +1,6 @@
 package com.crar.AwidCar.rest.controller;
 
 import com.crar.AwidCar.dto.NotificationDto;
-import com.crar.AwidCar.entity.Notification;
 import com.crar.AwidCar.rest.api.NotificationApi;
 import com.crar.AwidCar.service.NotificationService;
 import lombok.RequiredArgsConstructor;
@@ -20,29 +19,32 @@ public class NotificationController implements NotificationApi {
     public NotificationDto save(NotificationDto notification) {
         return notificationService.save(notification);
     }
-
     @Override
     public NotificationDto update(NotificationDto notification) {
         return notificationService.update(notification);
     }
-
     @Override
     public void delete(Long id) {
         notificationService.delete(id);
     }
-
     @Override
     public NotificationDto getNotificationById(Long id) {
         return notificationService.findById(id);
     }
-
     @Override
     public List<NotificationDto> getAllNotification() {
         return notificationService.findAll();
     }
-
     @Override
     public Page<NotificationDto> search(String query, Integer page, Integer size, String order, String sort) {
         return notificationService.rsqlQuery(query, page, size, order, sort);
+    }
+    @Override
+    public List<NotificationDto> getByNotificationGroupId(Long id) {
+        return notificationService.getByNotificationGroupId(id);
+    }
+    @Override
+    public List<NotificationDto> getByClientId(Long id) {
+        return notificationService.getByClientId(id);
     }
 }

@@ -73,4 +73,12 @@ public class NotificationService implements IBaseService<Notification, Notificat
         }
         return (Page<NotificationDto>) modelMapper.map(notificationRepository.findAll(RSQLJPASupport.toSpecification(query), PageRequest.of(page, size, Sort.Direction.fromString(order), sort)), NotificationDto.class);
     }
+
+    public List<NotificationDto> getByNotificationGroupId(Long id) {
+        return notificationRepository.getByNotificationGroupId(id).stream().map((element) -> modelMapper.map(element, NotificationDto.class)).collect(Collectors.toList());
+    }
+
+    public List<NotificationDto> getByClientId(Long id) {
+        return notificationRepository.getByClientId(id).stream().map((element) -> modelMapper.map(element, NotificationDto.class)).collect(Collectors.toList());
+    }
 }

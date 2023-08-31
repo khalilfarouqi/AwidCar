@@ -21,8 +21,8 @@ public class Order {
     @Column(name = "Etat")
     private Etat etat;
 
-    @Column(name = "Contry")
-    private String contry;
+    @Column(name = "Country")
+    private String country;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "BookingCity")

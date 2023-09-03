@@ -5,7 +5,7 @@ import javax.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,13 +32,13 @@ public class Order {
     @Column(name = "ReturnCity")
     private City returnCity;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @Column(name = "Start_date")
-    private Date startDate;
+    @DateTimeFormat(pattern = "DD/MM/YYYY")
+    @Column(name = "start_date")
+    private LocalDate startDate;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    @Column(name = "End_date")
-    private Date endDate;
+    @DateTimeFormat(pattern = "DD/MM/YYYY")
+    @Column(name = "end_date")
+    private LocalDate endDate;
 
     @Column(name = "TypeInsurance")
     private String typeInsurance;
